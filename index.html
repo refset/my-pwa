@@ -11,10 +11,23 @@
                 .then(reg => console.log('Service Worker registered', reg))
                 .catch(err => console.error('Service Worker registration failed', err));
         }
+
+        // Notification logic: Show notification every minute
+        if (Notification.permission === 'default') {
+            Notification.requestPermission();
+        }
+        setInterval(() => {
+            if (Notification.permission === 'granted') {
+                new Notification('Hello from MyPWA!', {
+                    body: 'This is your periodic notification.',
+                    icon: 'icon.png'
+                });
+            }
+        }, 60000); // 1 minute
     </script>
 </head>
 <body>
     <h1>Welcome to MyPWA!</h1>
-    <p>This is a simple Progressive Web App.</p>
+    <p>This is a simple Progressive Web App with periodic notifications.</p>
 </body>
 </html>
