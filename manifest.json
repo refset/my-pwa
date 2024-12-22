@@ -2,12 +2,13 @@
   "name": "MyPWA",
   "short_name": "MyPWA",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "description": "A simple PWA",
   "icons": [
     {
-      "src": "icon.png",
+      "src": "/icon.png",
       "sizes": "192x192",
       "type": "image/png"
     }

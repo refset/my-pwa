@@ -6,31 +6,35 @@
     <title>MyPWA</title>
     <link rel="manifest" href="manifest.json">
     <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('service-worker.js')
-                .then(reg => console.log('Service Worker registered', reg))
-                .catch(err => console.error('Service Worker registration failed', err));
-        }
-
-        // Notification logic: Show notification every minute
-        if (Notification.permission === 'default') {
-            Notification.requestPermission();
-        }
-        setInterval(() => {
-            if (Notification.permission === 'granted') {
-                const notification = new Notification('Hello from MyPWA!', {
-                    body: 'Click here to visit the GitHub homepage.',
-                    icon: 'icon.png'
+        document.addEventListener('DOMContentLoaded', () => {
+            // Explicitly request notification permission
+            if (Notification.permission === 'default') {
+                Notification.requestPermission().then(permission => {
+                    if (permission === 'granted') {
+                        console.log('Notification permission granted.');
+                    } else {
+                        console.log('Notification permission denied.');
+                    }
                 });
-                notification.onclick = () => {
-                    window.open('https://github.com/refset/my-pwa', '_blank');
-                };
             }
-        }, 60000); // 1 minute
+
+            // Periodic notifications every minute
+            setInterval(() => {
+                if (Notification.permission === 'granted') {
+                    const notification = new Notification('Hello from MyPWA!', {
+                        body: 'Click here to visit the GitHub homepage.',
+                        icon: 'icon.png'
+                    });
+                    notification.onclick = () => {
+                        window.open('https://github.com/refset/my-pwa', '_blank');
+                    };
+                }
+            }, 60000); // 1 minute
+        });
     </script>
 </head>
 <body>
-    <h1>Welcome to MyPWA (Version: v3)!</h1>
+    <h1>Welcome to MyPWA (Version: v4)!</h1>
     <p>This is a simple Progressive Web App with periodic notifications.</p>
     <p>Visit the <a href="https://github.com/refset/my-pwa" target="_blank">GitHub Repository</a>.</p>
 </body>
